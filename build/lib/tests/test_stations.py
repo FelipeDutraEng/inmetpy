@@ -34,30 +34,29 @@ def test_get_stations_attributes(inmet):
 def test_get_all_stations_attributes(inmet):
 
     cols = [
-        "WDIR",
-        "DATE",
         "STATION_NAME",
-        "RAIN",
-        "PRES",
-        "LAT",
-        "MIN_PRES",
-        "MAX_RH",
-        "MAX_PRES",
-        "WSPD",
-        "ST",
-        "MIN_DWPT",
-        "MAX_TEMP",
-        "GLO_RAD",
-        "DWPT",
-        "WGST",
-        "TEMP",
-        "HUMI",
         "STATION_ID",
+        "ST",
+        "DATETIME",
+        "LONGITUDE",
+        "LATITUDE",
+        "WDIR",
+        "WSPD",
+        "WGST",
+        "MIN_PRES",
+        "MAX_PRES",
+        "PRES",
         "MIN_TEMP",
-        "LONG",
-        "TIME",
-        "MIN_RH",
+        "MAX_TEMP",
+        "TEMP",
+        "MIN_DWPT",
         "MAX_DWPT",
+        "DWPT",
+        "MIN_RH",
+        "MAX_RH",
+        "HUMI",
+        "GLO_RAD",
+        "RAIN",
     ]
 
     assert inmet.get_all_stations().columns.tolist() == cols
@@ -140,3 +139,37 @@ def test_get_data_station_split_date_request_too_large_error(inmet):
         match="The maximum interval is 1 year between start_date and end_date. Use 'chunks=True' to split your request",
     ):
         inmet.get_data_station(start_date, end_date, "day", ["A701"])
+
+
+def test_get_all_stations(inmet):
+
+    cols = [
+        "DATETIME",
+        "STATION_NAME",
+        "STATION_ID",
+        "ST",
+        "LONGITUDE",
+        "LATITUDE",
+        "WDIR",
+        "WSPD",
+        "WGST",
+        "MIN_PRES",
+        "MAX_PRES",
+        "PRES",
+        "MIN_TEMP",
+        "MAX_TEMP",
+        "TEMP",
+        "MIN_DWPT",
+        "MAX_DWPT",
+        "DWPT",
+        "MIN_RH",
+        "MAX_RH",
+        "HUMI",
+        "GLO_RAD",
+        "RAIN",
+        "TEN_BAT",
+        "TEM_CPU",
+    ]
+
+    df_test = inmet.get_data_station("2019-01-01", "2019-01-02", "hour", ["A701"])
+    assert df_test.columns.tolist() == cols
